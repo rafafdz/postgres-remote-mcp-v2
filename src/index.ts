@@ -45,7 +45,7 @@ export class MyMCP extends McpAgent<Env, {}, Props> {
 			let sslConfig = false;
 			if (usEastCa) {
 				const ca = Buffer.from(usEastCa, 'base64').toString('utf-8');
-				sslConfig = { ca };
+				sslConfig = { ca, allowUnauthorized: true };
 			}
 	  
 			this.pool = new pg.Pool({
