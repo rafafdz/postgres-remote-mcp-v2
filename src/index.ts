@@ -42,7 +42,8 @@ export class MyMCP extends McpAgent<Env, {}, Props> {
 	  
 			this.pool = new pg.Pool({
 				connectionString: (this.env as any).DATABASE_URL,
-				ssl: { rejectUnauthorized: false },
+				// SSL is completely disabled
+				ssl: false,
 			});
 
 			// Set up resource base URL for schema resources
