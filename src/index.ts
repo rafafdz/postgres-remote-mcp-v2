@@ -39,11 +39,17 @@ export class MyMCP extends McpAgent<Env, {}, Props> {
 		if (ALLOWED_USERNAMES.has(this.props.login)) {
 			// Register GitHub user info tool (only for authorized users)
 			AuthTools(this.server, { accessToken: this.props.accessToken });
+
+			let sslConfig = false;
+			if (this.env.RDS_CA_B64) {
+				const ca = Buffer.from(this.env.RDS_CA_B64, 'base64').toString('utf-8');
+				sslConfig = { ca };
+			}
 	  
 			this.pool = new pg.Pool({
 				connectionString: (this.env as any).DATABASE_URL,
 				// SSL is completely disabled
-				ssl: false,
+				ssl: sslConfig,
 			});
 
 			// Set up resource base URL for schema resources
